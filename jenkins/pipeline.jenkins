@@ -39,14 +39,14 @@ pipeline {
       steps {
         /* chmod 777 /etc/ansible/hosts */
 
-        sh '''
-            echo "[assembly]\n" > /etc/ansible/hosts
+        sh """
+            echo '[assembly]\n' > /etc/ansible/hosts
             terraform output external_ip_address_vm_assembly >> /etc/ansible/hosts
-            echo "\n\n[prod]\n" >> /etc/ansible/hosts
+            echo '\n\n[prod]\n' >> /etc/ansible/hosts
             terraform output external_ip_address_vm_prod >> /etc/ansible/hosts
-            echo "\n" >> /etc/ansible/hosts
-            sed -i \\\'s/"//g\\\' /etc/ansible/hosts > /dev/null
-        '''
+            echo '\n' >> /etc/ansible/hosts
+            sed -i 's/\"//g' /etc/ansible/hosts > /dev/null
+        """
         }
       }
 
