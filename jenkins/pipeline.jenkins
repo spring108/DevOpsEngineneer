@@ -9,14 +9,20 @@ pipeline {
         git branch: 'main', url: 'https://github.com/spring108/DevOpsEngineneer.git'
         }
       }
-    stage('TEST') {
+    stage('replace MY_YANDEX_TOKEN in config.tf by my Yandex IAM-token') {
       steps {
-        sh 'pwd > /tmp/pwd'
-        sh 'ls > /tmp/ls'
+        /*
+        in file 
+        /etc/apply_token.sh
+        text like
+        sed -i 's/MY_YANDEX_TOKEN/xxxxxxxxxxxxxxxxxxx' ./config.tf 
+        */
+
+        sh '/etc/apply_token.sh'
+        
         }
       }
 
-    /*
     stage('Terraform init') {
       steps {
         sh 'terraform init'
@@ -27,6 +33,5 @@ pipeline {
         sh 'terraform apply --auto-approve'
         }
       }
-    */
     }
   }

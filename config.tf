@@ -11,7 +11,7 @@ terraform {
 # provider properties
 provider "yandex" {
   #my autorization tocken
-  token     = "MY_YANDEX_TOKEN"
+  token = "MY_YANDEX_TOKEN"
 
   #my yandex cloud identifier
   cloud_id  = "b1gogrmv0lhpqnt6hqu1"
@@ -59,35 +59,17 @@ resource "yandex_compute_instance" "vm-build" {
     private_key = file("/root/.ssh/id_rsa")
     host = yandex_compute_instance.vm-build.network_interface.0.nat_ip_address
   }
-  provisioner "file" {
-    source      = "./Dockerfile"
-    destination = "/tmp/Dockerfile"
-  }
-  # make the artifact, build, tag & push to yeandex registry -------------------------
+
+  #provisioner "file" {
+  #  source      = "./Dockerfile"
+  #  destination = "/tmp/Dockerfile"
+  #}
+
+  # first init for Ansible -------------------------
   provisioner "remote-exec" {
     inline = [
       "sudo apt update", 
-      "sudo apt-get update", 
-      "sudo apt install mc -y",
-      "sudo apt install git -y",
-      "sudo apt install docker.io -y",
-      "sudo apt install default-jdk -y",
-      "sudo apt install maven -y",
-
-      "cd /tmp",
-      "git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git",
-
-      "cd /tmp/boxfuse-sample-java-war-hello",
-      "mvn package",
-
-      "mkdir /tmp/terraform",
-      "cp /tmp/boxfuse-sample-java-war-hello/target/hello-1.0.war /tmp/terraform/hello.war",
-      "cp /tmp/Dockerfile /tmp/terraform/Dockerfile",
-      
-      "cd /tmp/terraform",
-      "sudo docker build -t mysite1 .",
-      "sudo docker tag mysite1 cr.yandex/${yandex_container_registry.my-reg.id}/mysite1",
-      "sudo docker push cr.yandex/${yandex_container_registry.my-reg.id}/mysite1"
+      "sudo apt install python -y",
     ]
   }
 
@@ -129,20 +111,11 @@ resource "yandex_compute_instance" "vm-prod" {
     private_key = file("/root/.ssh/id_rsa")
     host = yandex_compute_instance.vm-prod.network_interface.0.nat_ip_address
   }
-  provisioner "file" {
-    source      = "./Dockerfile"
-    destination = "/tmp/Dockerfile"
-  }
-  # pull & run artifact -------------------------
+  # first init for Ansible -------------------------
   provisioner "remote-exec" {
     inline = [
       "sudo apt update", 
-      "sudo apt-get update", 
-      "sudo apt install mc -y",
-      "sudo apt install docker.io -y",
-      
-      "sudo docker pull cr.yandex/${yandex_container_registry.my-reg.id}/mysite1",
-      "sudo docker run -d -p 8080:8080 cr.yandex/${yandex_container_registry.my-reg.id}/mysite1"
+      "sudo apt install python -y",
     ]
   }
 
