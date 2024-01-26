@@ -37,6 +37,8 @@ pipeline {
       }
     stage('Terraform output and make Ansible /etc/ansible/hosts file') {
       steps {
+        /* chmod 777 /etc/ansible/hosts */
+        
         sh 'echo "[assembly]\n" > /etc/ansible/hosts'
         sh 'terraform output external_ip_address_vm_assembly >> /etc/ansible/hosts'
         sh 'echo "\n\n[prod]\n" >> /etc/ansible/hosts'
