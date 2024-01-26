@@ -1,22 +1,31 @@
 pipeline {
-
   agent any
-
   parameters {
     string(name: "version", defaultValue: "v2.0.0", trim: true, description: "Введите версию нового docker-image")
     }
-
   stages {
-
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: 'https://github.com/spring108/DevOpsEngineneer.git'
+        }
+      }
     stage('TEST') {
       steps {
-        sh 'echo "******* BEGIN: *******"'
-        sh 'echo "test" > /tmp/mytest'
-        sh 'echo "******* END: *******"'
+        sh 'll > /tmp/ll'
         }
       }
 
-
-
+    /*
+    stage('Terraform init') {
+      steps {
+        sh 'terraform init'
+        }
+      }
+    stage('Terraform apply') {
+      steps {
+        sh 'terraform apply --auto-approve'
+        }
+      }
+    */
     }
   }
