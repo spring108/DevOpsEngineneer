@@ -11,7 +11,8 @@ pipeline {
       }
     stage('TEST') {
       steps {
-        sh 'll > /tmp/ll'
+        sh 'pwd > /tmp/pwd'
+        sh 'ls > /tmp/ls'
         }
       }
 
