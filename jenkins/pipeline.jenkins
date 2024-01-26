@@ -1,0 +1,20 @@
+pipeline {
+
+  parameters {
+    string(name: "version", defaultValue: "v2.0.0", trim: true, description: "Введите версию нового docker-image")
+    }
+
+  stages {
+
+    stage('TEST') {
+      steps {
+        sh 'echo "******* BEGIN: *******"'
+        sh 'echo "test" > /tmp/mytest'
+        sh 'echo "******* END: *******"'
+        }
+      }
+
+
+
+    }
+  }
