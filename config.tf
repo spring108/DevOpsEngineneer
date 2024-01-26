@@ -1,4 +1,4 @@
-terraform {
+terraform {terraform
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
@@ -27,18 +27,18 @@ provider "yandex" {
 
 
 #############################################################
-### VM "build"
+### VM "assembly"
 #############################################################
-# vm "build" resource configurations
-resource "yandex_compute_instance" "vm-build" {
-  name = "build"
+# vm "assembly" resource configurations
+resource "yandex_compute_instance" "vm-assembly" {
+  name = "assembly"
   allow_stopping_for_update = true
   resources {
     cores  = 2
     memory = 2
   }
   boot_disk {
-    disk_id = yandex_compute_disk.build_ubuntu2004_15GB.id
+    disk_id = yandex_compute_disk.assembly_ubuntu2004_15GB.id
   }
   network_interface {
     subnet_id = "e9buvssk2htbkq921avo"
@@ -52,13 +52,13 @@ resource "yandex_compute_instance" "vm-build" {
   }
 
 
-  # init vm-build -------------------------
+  # init vm-assembly -------------------------
   connection {
     type     = "ssh"
     user     = "spring"
     #private_key = file("/root/.ssh/id_rsa") >>> copy to
     private_key = file("/var/lib/jenkins/id_rsa")
-    host = yandex_compute_instance.vm-build.network_interface.0.nat_ip_address
+    host = yandex_compute_instance.vm-assembly.network_interface.0.nat_ip_address
   }
 
   #provisioner "file" {
@@ -82,7 +82,7 @@ resource "yandex_compute_instance" "vm-build" {
 #############################################################
 ### VM "prod"
 #############################################################
-# vm "build" resource configurations
+# vm "assembly" resource configurations
 resource "yandex_compute_instance" "vm-prod" {
   name = "prod"
   allow_stopping_for_update = true
@@ -109,7 +109,8 @@ resource "yandex_compute_instance" "vm-prod" {
   connection {
     type     = "ssh"
     user     = "spring"
-    private_key = file("/root/.ssh/id_rsa")
+    #private_key = file("/root/.ssh/id_rsa") >>> copy to
+    private_key = file("/var/lib/jenkins/id_rsa")
     host = yandex_compute_instance.vm-prod.network_interface.0.nat_ip_address
   }
   # first init for Ansible -------------------------
@@ -120,9 +121,9 @@ resource "yandex_compute_instance" "vm-prod" {
     ]
   }
 
-  # run after vm-build -------------------------
+  # run after vm-assembly -------------------------
   depends_on = [
-    yandex_compute_instance.vm-build
+    yandex_compute_instance.vm-assembly
   ]
 
 }
@@ -150,8 +151,8 @@ data "yandex_compute_image" "ubuntu_image" {
   family = "ubuntu-2004-lts"
 }
 
-# boot disk for vm-build = ubuntu 20.04 with 15GB
-resource "yandex_compute_disk" "build_ubuntu2004_15GB" {
+# boot disk for vm-assembly = ubuntu 20.04 with 15GB
+resource "yandex_compute_disk" "assembly_ubuntu2004_15GB" {
   type     = "network-ssd"
   zone     = "ru-central1-a"
   image_id = data.yandex_compute_image.ubuntu_image.id
