@@ -33,6 +33,7 @@
     - mv /tmp/terraform/terraform /bin
     - chmod +x /bin/terraform
     - sudo nano ~/.terraformrc #подключить зеркало яндекс
+    - sudo /var/lib/jenkins/.terraformrc #подключить зеркало яндекс
     - #### установка Ansible
     - sudo apt update
     - sudo apt policy ansible #ansible 2.5.1
