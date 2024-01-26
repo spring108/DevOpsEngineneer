@@ -1,5 +1,7 @@
 pipeline {
 
+  agent any
+
   parameters {
     string(name: "version", defaultValue: "v2.0.0", trim: true, description: "Введите версию нового docker-image")
     }
