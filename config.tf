@@ -56,7 +56,8 @@ resource "yandex_compute_instance" "vm-build" {
   connection {
     type     = "ssh"
     user     = "spring"
-    private_key = file("/root/.ssh/id_rsa")
+    #private_key = file("/root/.ssh/id_rsa") >>> copy to
+    private_key = file("/var/lib/jenkins/id_rsa")
     host = yandex_compute_instance.vm-build.network_interface.0.nat_ip_address
   }
 
