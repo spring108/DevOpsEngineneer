@@ -39,9 +39,9 @@ pipeline {
       steps {
         sh 'echo "[assembly]\n" > /etc/ansible/hosts'
         sh 'terraform output external_ip_address_vm_assembly >> /etc/ansible/hosts'
-        sh 'echo "\n[prod]\n" > /etc/ansible/hosts'
+        sh 'echo "\n\n[prod]\n" >> /etc/ansible/hosts'
         sh 'terraform output external_ip_address_vm_prod >> /etc/ansible/hosts'
-        sh 'echo "\n" > /etc/ansible/hosts'
+        sh 'echo "\n" >> /etc/ansible/hosts'
         }
       }
 
