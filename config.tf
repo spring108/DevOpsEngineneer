@@ -121,7 +121,7 @@ resource "yandex_compute_instance" "vm-prod" {
     ]
   }
 
-  # ALLOW to make together
+  # ALLOW to make at the same time
   # run after vm-assembly -------------------------
   #depends_on = [
   #  yandex_compute_instance.vm-assembly
