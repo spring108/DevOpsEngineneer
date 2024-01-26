@@ -12,10 +12,11 @@ pipeline {
     stage('replace MY_YANDEX_TOKEN in config.tf by my Yandex IAM-token') {
       steps {
         /*
+        current dir = /var/lib/jenkins/workspace/DevOpsEngineneer
+
         in file 
         /etc/apply_token.sh
-        chmod 755 apply_token.sh
-        inside text like
+        text inside like
         sed -i 's/MY_YANDEX_TOKEN/xxxxxxxxxxxxxxxxxxx/' ./config.tf
         */
 

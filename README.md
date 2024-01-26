@@ -28,8 +28,10 @@
     - #### установка Terraform
     - cd /tmp
     - git clone https://github.com/spring108/terraform.git
+    - cd /tmp/terraform
     - unzip terraform_1.7.0_linux_amd64.zip
-    - cp /tmp/terraform/terraform /bin
+    - mv /tmp/terraform/terraform /bin
+    - chmod +x /bin/terraform
     - sudo nano ~/.terraformrc #подключить зеркало яндекс
     - #### установка Ansible
     - sudo apt update
