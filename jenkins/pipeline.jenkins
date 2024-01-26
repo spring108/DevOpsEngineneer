@@ -45,7 +45,7 @@ pipeline {
             echo "\n\n[prod]\n" >> /etc/ansible/hosts
             terraform output external_ip_address_vm_prod >> /etc/ansible/hosts
             echo "\n" >> /etc/ansible/hosts
-            sed -i "s/\"//g" /etc/ansible/hosts > /dev/null
+            sed -i \\\'s/"//g\\\' /etc/ansible/hosts > /dev/null
         '''
         }
       }
