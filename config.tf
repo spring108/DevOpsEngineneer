@@ -82,7 +82,7 @@ resource "yandex_compute_instance" "vm-assembly" {
 #############################################################
 ### VM "prod"
 #############################################################
-# vm "assembly" resource configurations
+# vm "prod" resource configurations
 resource "yandex_compute_instance" "vm-prod" {
   name = "prod"
   allow_stopping_for_update = true
@@ -132,8 +132,12 @@ resource "yandex_compute_instance" "vm-prod" {
 
 
 
-
-
+output "external_ip_address_vm_assembly" {
+  value = yandex_compute_instance.vm-assembly.network_interface.0.nat_ip_address
+}
+output "external_ip_address_vm_prod" {
+  value = yandex_compute_instance.vm-prod.network_interface.0.nat_ip_address
+}
 
 
 
