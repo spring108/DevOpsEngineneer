@@ -40,9 +40,9 @@
     - sudo apt install -y software-properties-common
     - sudo add-apt-repository --yes --update ppa:ansible/ansible
     - sudo apt update
-    - sudo apt policy ansible #ansible 2.9.27
+    - sudo apt policy ansible #ansible 2.12.10
     - sudo apt install ansible -y
-    - ansible --version #ansible 2.9.27
+    - ansible --version #ansible 2.12.10
     - /etc/ansible/hosts <<<<<<<<<<<<<<<<<<<<<<<<<<<
   - #### Настройка Jenkins:
     - создание задания DevOpsEngineneer

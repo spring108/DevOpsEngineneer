@@ -35,9 +35,13 @@ pipeline {
         sh 'terraform apply --auto-approve'
         }
       }
-    stage('Terraform output') {
+    stage('Terraform output and make Ansible /etc/ansible/hosts file') {
       steps {
-        sh 'terraform output vm_ip_addresses > ./ip_addresses.txt'
+        sh 'echo "[assembly]\n" > /etc/ansible/hosts'
+        sh 'terraform output external_ip_address_vm_assembly >> /etc/ansible/hosts'
+        sh 'echo "\n[prod]\n" > /etc/ansible/hosts'
+        sh 'terraform output external_ip_address_vm_prod >> /etc/ansible/hosts'
+        sh 'echo "\n" > /etc/ansible/hosts'
         }
       }
 
