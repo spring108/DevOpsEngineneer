@@ -14,12 +14,13 @@ pipeline {
         /*
         in file 
         /etc/apply_token.sh
-        text like
-        sed -i 's/MY_YANDEX_TOKEN/xxxxxxxxxxxxxxxxxxx' ./config.tf 
+        chmod 755 apply_token.sh
+        inside text like
+        sed -i 's/MY_YANDEX_TOKEN/xxxxxxxxxxxxxxxxxxx/' ./config.tf 
         */
 
         sh '/etc/apply_token.sh'
-        
+
         }
       }
 
