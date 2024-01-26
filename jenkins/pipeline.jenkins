@@ -16,10 +16,10 @@ pipeline {
         /etc/apply_token.sh
         chmod 755 apply_token.sh
         inside text like
-        sed -i 's/MY_YANDEX_TOKEN/xxxxxxxxxxxxxxxxxxx/' config.tf > config.tf
+        sed -i 's/MY_YANDEX_TOKEN/xxxxxxxxxxxxxxxxxxx/' ./config.tf
         */
 
-        sh '/etc/apply_token.sh'
+        sh '/etc/apply_token.sh > /dev/null'
 
         }
       }
