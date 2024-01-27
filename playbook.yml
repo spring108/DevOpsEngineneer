@@ -1,0 +1,79 @@
+---
+# Ansible playbook
+# 
+# VM-1: group = [assembly]
+#   - make docker-artifact by https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+#   - send artifact to YANDEX-CLOUD Container Registry
+# VM-2: group = [prod]
+#   - get artifact from YANDEX-CLOUD Container Registry
+#   - run service
+
+
+- name: group [assembly] - make the artifact
+  hosts: build
+  become: yes
+  vars_files:
+  - /etc/ansible/params.json
+  tasks:
+  - name: group [assembly] - prepare infrastructure
+    apt: name={{ item }} state=present
+    with_items:
+    - git
+    - default-jdk
+    - maven
+    - docker.io
+  
+
+  - name: group [assembly] - Clone GIT Repository for PROJECT
+    git:
+      repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+      dest: /tmp/boxfuse-sample-java-war-hello
+      clone: yes
+      update: yes
+  - name: group [assembly] - Build the WAR-artifact
+    shell: cd /tmp/boxfuse-sample-java-war-hello && mvn package
+
+
+  - name: group [assembly] - Clone GIT Repository for get Dockerfile
+    git:
+      repo: 'https://github.com/spring108/DevOpsEngineneer.git'
+      dest: /tmp/DevOpsEngineneer
+      clone: yes
+      update: yes
+  - name: Copy the WAR-artifact to /tmp/DevOpsEngineneer
+    copy:
+      src: /tmp/boxfuse-sample-java-war-hello/target/hello-1.0.war
+      dest: /tmp/DevOpsEngineneer/hello.war
+      force: true
+      remote_src: yes
+
+  - name: group [assembly] - BUILD the Docker-artifact
+    shell: cd /tmp/DevOpsEngineneer && docker build -t mysite1 .
+  - name: group [assembly] - TAG the Docker-artifact
+    shell: cd /tmp/DevOpsEngineneer && docker tag mysite1 cr.yandex/{{ registry_id }}/mysite1
+  - name: group [assembly] - PUSH the Docker-artifact to YANDEX-CLOUD Container Registry
+    shell: cd /tmp/DevOpsEngineneer && docker push cr.yandex/{{ registry_id }}/mysite1
+
+
+
+
+
+
+
+
+- name: group [prod] - RUN the SERVICE
+  hosts: prod
+  become: yes
+  vars_files:
+  - /etc/ansible/params.json
+  tasks:
+  - name: group [prod] - prepare infrastructure
+    apt: name={{ item }} state=present
+    with_items:
+    - docker.io
+  - name: group [prod] - PULL the Docker-artifact
+    shell: docker pull cr.yandex/{{ registry_id }}/mysite1
+  - name: group [prod] - RUN the Docker-artifact
+    shell: docker run -d -p 8080:8080 cr.yandex/{{ registry_id }}/mysite1
+
+

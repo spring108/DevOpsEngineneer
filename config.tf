@@ -70,7 +70,7 @@ resource "yandex_compute_instance" "vm-assembly" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt update", 
-      "sudo apt install python -y",
+      "sudo apt install python -y" /*for Ansible*/
     ]
   }
 
@@ -117,7 +117,7 @@ resource "yandex_compute_instance" "vm-prod" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt update", 
-      "sudo apt install python -y",
+      "sudo apt install python -y" /*for Ansible*/
     ]
   }
 
@@ -138,6 +138,9 @@ output "external_ip_address_vm_assembly" {
 }
 output "external_ip_address_vm_prod" {
   value = yandex_compute_instance.vm-prod.network_interface.0.nat_ip_address
+}
+output "yandex_container_registry_id" {
+  value = yandex_container_registry.my-reg.id
 }
 
 
@@ -175,13 +178,13 @@ resource "yandex_compute_disk" "prod_ubuntu2004_15GB" {
 
 
 #############################################################
-### Yandex Docker Registry: mydockerregistry
+### Yandex Docker Registry: mydockerregistry2
 #############################################################
 resource "yandex_container_registry" "my-reg" {
-  name = "mydockerregistry"
+  name = "mydockerregistry2"
   folder_id = "b1g5ks1opqq9pgacsaoo"
   labels = {
-    my-label = "it-is-mysite1"
+    my-label = "it-is-mysite2"
   }
 }
 resource "yandex_container_registry_iam_binding" "puller" {

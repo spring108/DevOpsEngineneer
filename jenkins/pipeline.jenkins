@@ -35,7 +35,9 @@ pipeline {
         sh 'terraform apply --auto-approve'
         }
       }
-    stage('Terraform output and make Ansible /etc/ansible/hosts file') {
+
+
+    stage('Make /etc/ansible/hosts file for Ansible') {
       steps {
         sh """
             echo '[assembly]\n' > /etc/ansible/hosts
@@ -47,7 +49,26 @@ pipeline {
         """
         }
       }
+    
+    
+    stage('Make parameters for Ansible in JSON-file') {
+      steps {
+        sh """
+            echo '{\n\"registry_id\": \"' > /etc/ansible/params.json
+            terraform output yandex_container_registry_id >> /etc/ansible/params.json
+            echo '\",\n\"version\":\"' >> /etc/ansible/params.json
+            echo \"$version\" >> /etc/ansible/params.json
+            echo '\"\n}' >> /etc/ansible/params.json
+        """
+        }
+      }
 
+    stage('Ansible run playbook') {
+      steps {
+        sh 'ansible all -m ping'
+        sh 'ansible-playbook playbook.yml' /*will use /etc/ansible/params.json*/
+        }
+      }
 
     }
   }
