@@ -34,6 +34,7 @@
     - chmod +x /bin/terraform
     - sudo nano ~/.terraformrc #подключить зеркало яндекс
     - sudo /var/lib/jenkins/.terraformrc #подключить зеркало яндекс
+    - chmod -R 777 /etc/ansible #для sed -i 's/"//g' /etc/ansible/hosts
     - #### установка Ansible
     - sudo apt update
     - sudo apt policy ansible #ansible 2.5.1
