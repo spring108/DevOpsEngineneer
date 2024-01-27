@@ -34,7 +34,6 @@
     - chmod +x /bin/terraform
     - sudo nano ~/.terraformrc #подключить зеркало яндекс
     - sudo /var/lib/jenkins/.terraformrc #подключить зеркало яндекс
-    - chmod -R 777 /etc/ansible #для sed -i 's/"//g' /etc/ansible/hosts
     - #### установка Ansible
     - sudo apt update
     - sudo apt policy ansible #ansible 2.5.1
@@ -44,7 +43,7 @@
     - sudo apt policy ansible #ansible 2.12.10
     - sudo apt install ansible -y
     - ansible --version #ansible 2.12.10
-    - /etc/ansible/hosts <<<<<<<<<<<<<<<<<<<<<<<<<<<
+    - chmod -R 777 /etc/ansible <i>#для sed -i 's/"//g' /etc/ansible/hosts</i>
   - #### Настройка Jenkins:
     - создание задания DevOpsEngineneer
       - параметризованная сборка (String Parameter: имя = version ; значение по умолчанию = v2.0.0)
@@ -52,6 +51,7 @@
         - Repository URL = https://github.com/spring108/DevOpsEngineneer.git
         - Branch Specifier = */main
         - Script Path = jenkins/pipeline.jenkins
+      - <img src="SCREENSHOTS/01 Jenkins pipeline.png">
 ## Сервер assembly:
   - его создаёт и управляет сервер "MASTER"
 ## Сервер prod:
