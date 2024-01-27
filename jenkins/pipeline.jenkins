@@ -65,8 +65,8 @@ pipeline {
 
     stage('Ansible run playbook') {
       steps {
-        sh 'ansible all -m ping'
-        sh 'ansible-playbook playbook.yml' /*will use /etc/ansible/params.json*/
+        sh 'sudo ansible all -m ping'
+        sh 'sudo ansible-playbook playbook.yml' /*will use /etc/ansible/params.json*/
         }
       }
 
