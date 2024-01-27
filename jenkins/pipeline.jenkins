@@ -54,11 +54,11 @@ pipeline {
     stage('Make parameters for Ansible in JSON-file') {
       steps {
         sh """
-            echo '{\n\"registry_id\":' > /etc/ansible/params.json
+            echo -n '{\n\"registry_id\": ' > /etc/ansible/params.json
             terraform output yandex_container_registry_id >> /etc/ansible/params.json
-            echo ',\"version\":' >> /etc/ansible/params.json
-            echo \"$version\" >> /etc/ansible/params.json
-            echo '\n}' >> /etc/ansible/params.json
+            echo -n ',\"version\": ' >> /etc/ansible/params.json
+            echo \"\\\"$version\\\"\" >> /etc/ansible/params.json
+            echo '}' >> /etc/ansible/params.json
         """
         }
       }
