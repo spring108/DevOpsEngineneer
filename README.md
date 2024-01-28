@@ -56,4 +56,9 @@
   - его создаёт и управляет сервер "MASTER"
 ## Сервер prod:
   - его создаёт и управляет сервер "MASTER"
-## Смотрим http://prod_ip:8080/hello
+## Результат
+  - <img src="SCREENSHOTS/02 Jenkins SUCCESS BUILD and RUN.png">
+  - #### Смотрим http://prod_ip:8080/hello
+  - <img src="SCREENSHOTS/03 result APP.png">
+
+  
