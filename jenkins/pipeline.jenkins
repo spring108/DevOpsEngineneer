@@ -72,8 +72,10 @@ pipeline {
 
     stage('Open Resulting Website') {
       steps {
+        sh 'terraform output -raw  external_ip_address_vm_prod >> /etc/ansible/prod_ip'
         script {
-          sh 'xdg-open https://yandex.ru/'
+          def prod_ip = readFile(file: '/etc/ansible/prod_ip')
+          input message: "Перейдите на сайт http://${prod_ip}:8080/hello/", ok: 'Продолжить'
           }
         }
       }
