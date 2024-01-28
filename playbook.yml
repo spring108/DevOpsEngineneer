@@ -50,9 +50,9 @@
   - name: group [assembly] - BUILD the Docker-artifact
     shell: cd /tmp/DevOpsEngineneer && docker build -t mysite1 .
   - name: group [assembly] - TAG the Docker-artifact
-    shell: cd /tmp/DevOpsEngineneer && docker tag mysite1 cr.yandex/{{ registry_id }}/mysite1
+    shell: cd /tmp/DevOpsEngineneer && docker tag mysite1 cr.yandex/{{ registry_id }}/mysite1:{{ version }}
   - name: group [assembly] - PUSH the Docker-artifact to YANDEX-CLOUD Container Registry
-    shell: cd /tmp/DevOpsEngineneer && docker push cr.yandex/{{ registry_id }}/mysite1
+    shell: cd /tmp/DevOpsEngineneer && docker push cr.yandex/{{ registry_id }}/mysite1:{{ version }}
 
 
 
@@ -72,8 +72,8 @@
     with_items:
     - docker.io
   - name: group [prod] - PULL the Docker-artifact
-    shell: docker pull cr.yandex/{{ registry_id }}/mysite1
+    shell: docker pull cr.yandex/{{ registry_id }}/mysite1:{{ version }}
   - name: group [prod] - RUN the Docker-artifact
-    shell: docker run -d -p 8080:8080 cr.yandex/{{ registry_id }}/mysite1
+    shell: docker run -d -p 8080:8080 cr.yandex/{{ registry_id }}/mysite1:{{ version }}
 
 
