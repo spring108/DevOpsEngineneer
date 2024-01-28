@@ -10,7 +10,7 @@
 
 
 - name: group [assembly] - make the artifact
-  hosts: build
+  hosts: assembly
   become: yes
   vars_files:
   - /etc/ansible/params.json
@@ -30,7 +30,7 @@
       dest: /tmp/boxfuse-sample-java-war-hello
       clone: yes
       update: yes
-  - name: group [assembly] - Build the WAR-artifact
+  - name: group [assembly] - Make the WAR-artifact
     shell: cd /tmp/boxfuse-sample-java-war-hello && mvn package
 
 
