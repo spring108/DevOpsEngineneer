@@ -40,12 +40,13 @@ pipeline {
     stage('Make /etc/ansible/hosts file for Ansible') {
       steps {
         sh """
-            echo '[assembly]\n' > /etc/ansible/hosts
-            terraform output external_ip_address_vm_assembly >> /etc/ansible/hosts
-            echo '\n\n[prod]\n' >> /etc/ansible/hosts
-            terraform output external_ip_address_vm_prod >> /etc/ansible/hosts
+            echo '[assembly]' > /etc/ansible/hosts
+            terraform output -raw external_ip_address_vm_assembly >> /etc/ansible/hosts
+            echo 'ansible_user=spring ansible_ssh_private_key_file=/var/lib/jenkins/id_rsa' >> /etc/ansible/hosts
+            echo '\n[prod]' >> /etc/ansible/hosts
+            terraform output -raw  external_ip_address_vm_prod >> /etc/ansible/hosts
+            echo 'ansible_user=spring ansible_ssh_private_key_file=/var/lib/jenkins/id_rsa' >> /etc/ansible/hosts
             echo '\n' >> /etc/ansible/hosts
-            sed -i 's/\"//g' /etc/ansible/hosts > /dev/null
         """
         }
       }
