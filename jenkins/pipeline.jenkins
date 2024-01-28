@@ -70,5 +70,13 @@ pipeline {
         }
       }
 
+    stage('Open Resulting Website') {
+      steps {
+        script {
+          sh 'xdg-open https://yandex.ru/'
+          }
+        }
+      }
+
     }
   }
