@@ -52,6 +52,7 @@
       force: true
       remote_src: yes
 
+
   #- name: group [assembly] - BUILD the Docker-artifact
   #  shell: cd /tmp/DevOpsEngineneer && docker build -t mysite1 .
   #- name: group [assembly] - TAG the Docker-artifact
@@ -59,12 +60,18 @@
   - name: group [assembly] - BUILD & TAG the Docker-artifact
     docker_image:
       name: cr.yandex/{{ registry_id }}/mysite1
-      tag: {{ version }}
-      path: /tmp/DevOpsEngineneer
+      tag: v{{ version }}
+      source: build
+      build:
+        path: /tmp/DevOpsEngineneer
+      force: yes
+      state: present
+      push: yes
 
 
-  - name: group [assembly] - PUSH the Docker-artifact to YANDEX-CLOUD Container Registry
-    shell: cd /tmp/DevOpsEngineneer && docker push cr.yandex/{{ registry_id }}/mysite1:{{ version }}
+
+  #- name: group [assembly] - PUSH the Docker-artifact to YANDEX-CLOUD Container Registry
+  #  shell: cd /tmp/DevOpsEngineneer && docker push cr.yandex/{{ registry_id }}/mysite1:{{ version }}
 
 
 
