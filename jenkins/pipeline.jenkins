@@ -60,6 +60,7 @@ pipeline {
             echo -n '\",\n\"version\": ' >> /etc/ansible/params.json
             echo \"\\\"$version\\\"\" >> /etc/ansible/params.json
             echo '}' >> /etc/ansible/params.json
+            chmod 755 /etc/ansible/params.json
         """
         }
       }
