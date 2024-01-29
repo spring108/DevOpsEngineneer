@@ -80,7 +80,7 @@
   hosts: prod
   become: yes
   vars_files:
-  - /etc/ansible/params.json
+  - /etc/ansible/params.yml
   tasks:
   - name: group [prod] - prepare infrastructure
     apt: name={{ item }} state=present
