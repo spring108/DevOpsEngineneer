@@ -13,7 +13,7 @@
   hosts: assembly
   become: yes
   vars_files:
-  - /etc/ansible/params.json
+  - /etc/ansible/params.yml
   tasks:
   - name: group [assembly] - prepare infrastructure
     apt: name={{ item }} state=present
