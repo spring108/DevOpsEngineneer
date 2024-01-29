@@ -30,6 +30,11 @@
       dest: /tmp/boxfuse-sample-java-war-hello
       clone: yes
       update: yes
+  - name: group [assembly] - Artifact Version injection
+    lineinfile:
+      path: '/tmp/boxfuse-sample-java-war-hello/src/main/webapp/index.jsp'
+      regexp: ^<h1>Congratulations!</h1>
+      line: '<h1 style="color:red;">Artifact Version IS {{ version }}</h1>'
   - name: group [assembly] - Make the WAR-artifact
     shell: cd /tmp/boxfuse-sample-java-war-hello && mvn package
 
