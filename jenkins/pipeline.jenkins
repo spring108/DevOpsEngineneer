@@ -60,14 +60,14 @@ pipeline {
             echo -n '\",\n\"version\": ' >> /etc/ansible/params.json
             echo \"\\\"$version\\\"\" >> /etc/ansible/params.json
             echo '}' >> /etc/ansible/params.json
-            chmod 755 /etc/ansible/params.json
+            chmod 777 /etc/ansible/params.json
         """
         }
       }
 
     stage('Ansible run playbook') {
       steps {
-        sh 'sudo -n ansible-playbook playbook.yml' /*will use /etc/ansible/params.json*/
+        sh 'sudo -n ansible-playbook playbook.yml' /* will use /etc/ansible/params.json */
         }
       }
 
