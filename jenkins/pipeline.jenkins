@@ -66,8 +66,8 @@ pipeline {
         */
         sh """
             echo -n '---\nregistry_id: ' > /etc/ansible/params.yml
-            terraform output yandex_container_registry_id >> /etc/ansible/params.yml
-            echo -n 'version: ' >> /etc/ansible/params.yml
+            terraform output -raw yandex_container_registry_id >> /etc/ansible/params.yml
+            echo -n '\nversion: ' >> /etc/ansible/params.yml
             echo \"$version\" >> /etc/ansible/params.yml
         """
         }
